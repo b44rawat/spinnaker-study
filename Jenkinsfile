@@ -24,8 +24,8 @@ node {
 	    archiveArtifacts artifacts: 'spinnaker.properties', fingerprint: true
 	}
 	stage('Push to ECR') {
-		docker.withRegistry('https://registry.hub.docker.com', 'rawathub') {
-			docker.image('rawat4/${JOB_NAME}').push('${BUILD_ID}')
+		docker.withRegistry('rawat4', 'rawathub') {
+			docker.image('${JOB_NAME}').push('${BUILD_ID}')
 	   }
 	}
 }
