@@ -6,7 +6,7 @@ node {
       sh './mvnw clean package'
 	}
 	stage('Build Container') {
-		docker.build('${JOB_NAME}', '-f src/main/docker/Dockerfile.jvm .')
+		docker.build('rawat4/${JOB_NAME}', '-f src/main/docker/Dockerfile.jvm .')
 	}
 	stage('Create tar.gz') {
        sh 'tar -czvf quarkus-microservice-chart.tar.gz -C helm quarkus-microservice'
@@ -24,8 +24,8 @@ node {
 	    archiveArtifacts artifacts: 'spinnaker.properties', fingerprint: true
 	}
 	stage('Push to ECR') {
-		docker.withRegistry('rawat4', 'rawathub') {
-			docker.image('${JOB_NAME}').push('${BUILD_ID}')
+		docker.withRegistry('https://registry.hub.docker.com', 'rawathub') {
+			docker.image('rawat4/${JOB_NAME}').push('${BUILD_ID}')
 	   }
 	}
 }
