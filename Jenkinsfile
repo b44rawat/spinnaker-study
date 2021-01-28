@@ -25,7 +25,7 @@ node {
 	}
 	stage('Push to ECR') {
 		docker.withRegistry('https://registry.hub.docker.com', 'rawathub') {
-			docker.image('${JOB_NAME}').push('${BUILD_ID}')
+			docker.image('rawat4/${JOB_NAME}').push('${BUILD_ID}')
 	   }
 	}
 }
